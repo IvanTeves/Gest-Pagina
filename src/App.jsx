@@ -58,7 +58,8 @@ export default function App() {
       {/* Header */}
       <header className="header container">
         <a href="#" className="brand" aria-label="FigProjects - Inicio" style={{ zIndex: 100 }}>
-          <span className="brand-mark" />
+          {/* <span className="brand-mark" /> */}
+          <img src="/higo.png" alt="Logo" style={{ height: '28px', width: 'auto' }} />
           <span className="brand-name">FigProjects</span>
         </a>
         
