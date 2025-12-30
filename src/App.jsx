@@ -26,10 +26,21 @@ function Icon({ children }) {
 
 export default function App() {
   const { width } = useWindowSize()
+  const [menuOpen, setMenuOpen] = useState(false)
   const isMobile = width < 768
+  
   // Smaller scale and starting position for mobile
   const scale = isMobile ? 1.3 : 2
   const position = isMobile ? [0, -1, 0] : [0, -1, 0]
+
+  // Lock body scroll when menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+  }, [menuOpen])
 
   return (
     <main>
@@ -46,15 +57,37 @@ export default function App() {
       </div>
       {/* Header */}
       <header className="header container">
-        <a href="#" className="brand" aria-label="FigProjects - Inicio">
+        <a href="#" className="brand" aria-label="FigProjects - Inicio" style={{ zIndex: 100 }}>
           <span className="brand-mark" />
           <span className="brand-name">FigProjects</span>
         </a>
-        <nav className="nav">
+        
+        {/* Desktop Nav */}
+        <nav className="nav desktop-nav">
           <a href="#servicios">Servicios</a>
           <a href="#tecnologias">Tecnologías</a>
           <a href="#contacto">Contacto</a>
         </nav>
+
+        {/* Mobile Toggle */}
+        <button 
+          className={`mobile-toggle ${menuOpen ? 'open' : ''}`} 
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Menu"
+        >
+          <span className="bar top"></span>
+          <span className="bar middle"></span>
+          <span className="bar bottom"></span>
+        </button>
+
+        {/* Mobile Menu Overlay */}
+        <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
+          <nav className="mobile-nav-links">
+            <a href="#servicios" onClick={() => setMenuOpen(false)}>Servicios</a>
+            <a href="#tecnologias" onClick={() => setMenuOpen(false)}>Tecnologías</a>
+            <a href="#contacto" onClick={() => setMenuOpen(false)}>Contacto</a>
+          </nav>
+        </div>
       </header>
 
       {/* Hero */}

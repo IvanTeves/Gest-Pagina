@@ -31,6 +31,7 @@ main {
 .brand-name {
   font-weight: 800;
 }
+/* Nav */
 .nav {
   display: flex;
   align-items: center;
@@ -42,6 +43,130 @@ main {
 }
 .nav a:hover {
   opacity: 1;
+}
+
+/* Mobile Toggle Button */
+.mobile-toggle {
+  display: none; /* Hidden on desktop */
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 44px;
+  height: 44px; /* Slightly larger touch target */
+  background: transparent; /* Cleaner without background */
+  border: none;
+  cursor: pointer;
+  z-index: 101; /* Keep above menu */
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+.mobile-toggle:active {
+  transform: scale(0.9);
+}
+.mobile-toggle .bar {
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-strong);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  transform-origin: center;
+}
+
+/* Open State - Perfect X */
+.mobile-toggle.open .top {
+  transform: translateY(8px) rotate(45deg);
+}
+.mobile-toggle.open .middle {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+.mobile-toggle.open .bottom {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 5, 20, 0.95); /* Deep dark violet/black */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none; /* Allows clicks to pass through when closed */
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mobile-menu.open {
+  opacity: 1;
+  pointer-events: auto; /* Blocks clicks to underlying content */
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4vh;
+}
+
+.mobile-nav-links a {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff; /* Painted white by default */
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
+  
+  /* Initial state for animation */
+  transform: translateY(40px);
+  opacity: 0;
+}
+
+/* Hover/Touch State */
+.mobile-nav-links a:hover,
+.mobile-nav-links a:active {
+  color: var(--violet-500); /* Painted violet */
+  transform: scale(1.05);
+}
+
+.mobile-menu.open .mobile-nav-links a {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, color 0.2s;
+}
+
+/* Stagger delay for links */
+.mobile-menu.open .mobile-nav-links a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu.open .mobile-nav-links a:nth-child(2) { transition-delay: 0.2s; }
+.mobile-menu.open .mobile-nav-links a:nth-child(3) { transition-delay: 0.3s; }
+
+/* Decorative circle in background of menu */
+.mobile-menu::before {
+  content: '';
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(217, 70, 239, 0.2) 0%, transparent 70%);
+  filter: blur(60px);
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+  .mobile-toggle {
+    display: flex;
+  }
 }
 
 /* Hero */
