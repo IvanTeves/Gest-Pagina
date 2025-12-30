@@ -1,8 +1,20 @@
 import './App.css'
-import { Suspense } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Environment } from '@react-three/drei'
 import { FigModel } from './components/FigModel'
+
+function useWindowSize() {
+  const [size, setSize] = useState({ width: window.innerWidth, height: window.innerHeight })
+  useEffect(() => {
+    function handleResize() {
+      setSize({ width: window.innerWidth, height: window.innerHeight })
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+  return size
+}
 
 function Icon({ children }) {
   return (
@@ -13,6 +25,12 @@ function Icon({ children }) {
 }
 
 export default function App() {
+  const { width } = useWindowSize()
+  const isMobile = width < 768
+  // Smaller scale and starting position for mobile
+  const scale = isMobile ? 1.3 : 2
+  const position = isMobile ? [0, -1, 0] : [0, -1, 0]
+
   return (
     <main>
       <div className="canvas-container">
@@ -21,7 +39,7 @@ export default function App() {
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
           <pointLight position={[-10, -10, -10]} />
           <Suspense fallback={null}>
-            <FigModel scale={2} position={[0, -1, 0]} />
+            <FigModel scale={scale} position={position} />
             <Environment preset="city" />
           </Suspense>
         </Canvas>
