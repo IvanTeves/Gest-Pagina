@@ -1,4 +1,8 @@
 import './App.css'
+import { Suspense } from 'react'
+import { Canvas } from '@react-three/fiber'
+import { Environment } from '@react-three/drei'
+import { FigModel } from './components/FigModel'
 
 function Icon({ children }) {
   return (
@@ -11,11 +15,22 @@ function Icon({ children }) {
 export default function App() {
   return (
     <main>
+      <div className="canvas-container">
+        <Canvas camera={{ position: [0, 0, 7], fov: 50 }}>
+          <ambientLight intensity={0.5} />
+          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+          <pointLight position={[-10, -10, -10]} />
+          <Suspense fallback={null}>
+            <FigModel scale={2} position={[0, -1, 0]} />
+            <Environment preset="city" />
+          </Suspense>
+        </Canvas>
+      </div>
       {/* Header */}
       <header className="header container">
-        <a href="#" className="brand" aria-label="GestSoft - Inicio">
+        <a href="#" className="brand" aria-label="FigProjects - Inicio">
           <span className="brand-mark" />
-          <span className="brand-name">GestSoft</span>
+          <span className="brand-name">FigProjects</span>
         </a>
         <nav className="nav">
           <a href="#servicios">Servicios</a>
@@ -169,7 +184,7 @@ export default function App() {
           </p>
           <div className="cta-group">
             <a
-              href="mailto:contacto@gestsoft.example"
+              href="mailto:contacto@figprojects.example"
               className="btn btn-primary"
             >
               <Icon>📩</Icon> Solicitar propuesta
@@ -183,7 +198,7 @@ export default function App() {
 
       {/* Footer */}
       <footer className="footer container">
-        <p>© {new Date().getFullYear()} GestSoft. Hecho con ❤️ desde LATAM.</p>
+        <p>© {new Date().getFullYear()} FigProjects. Hecho con ❤️ desde LATAM.</p>
         <div className="footer-links">
           <a href="#privacidad">Privacidad</a>
           <span>·</span>
