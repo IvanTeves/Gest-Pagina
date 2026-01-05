@@ -3,6 +3,7 @@ import { Suspense, useState, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Environment } from '@react-three/drei'
 import { FigModel } from './components/FigModel'
+import { FloatingWhatsApp } from './components/FloatingWhatsApp'
 
 function useWindowSize() {
   const [size, setSize] = useState({ width: window.innerWidth, height: window.innerHeight })
@@ -236,7 +237,7 @@ export default function App() {
           </p>
           <div className="cta-group">
             <a
-              href="mailto:contacto@figprojects.example"
+              href="mailto:contacto@figprojects.com"
               className="btn btn-primary"
             >
               <Icon>📩</Icon> Solicitar propuesta
@@ -248,7 +249,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="footer container">
         <p>© {new Date().getFullYear()} FigProjects. Hecho con ❤️ desde LATAM.</p>
         <div className="footer-links">
@@ -257,6 +257,7 @@ export default function App() {
           <a href="#terminos">Términos</a>
         </div>
       </footer>
+      <FloatingWhatsApp />
     </main>
   )
 }
